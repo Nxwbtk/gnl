@@ -6,7 +6,7 @@
 /*   By: bsirikam <bsirikam@student.42bangkok.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 17:49:25 by bsirikam          #+#    #+#             */
-/*   Updated: 2022/10/27 04:41:56 by bsirikam         ###   ########.fr       */
+/*   Updated: 2022/10/29 19:26:26 by bsirikam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ char	*ha_nextnaja(char *str, int fd)
 char	*get_next_line(int fd)
 {
 	static char	*str;
+	char		*torpai;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
@@ -48,6 +49,6 @@ char	*get_next_line(int fd)
 			return (NULL);
 		*str = '\0';
 	}
-	str = ha_nextnaja(str, fd);
+	torpai = ha_nextnaja(str, fd);
 	return (NULL);
 }

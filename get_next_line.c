@@ -6,7 +6,7 @@
 /*   By: bsirikam <bsirikam@student.42bangkok.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 17:49:25 by bsirikam          #+#    #+#             */
-/*   Updated: 2022/10/26 02:03:11 by bsirikam         ###   ########.fr       */
+/*   Updated: 2022/10/27 04:41:56 by bsirikam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ char	*ha_nextnaja(char *str, int fd)
 		if (!torpai)
 		{
 			new_str = ft_strjoin(str, "");
-			
 		}
 		if (torpai)
 		{

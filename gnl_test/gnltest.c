@@ -1,64 +1,67 @@
 #include "get_next_line.h"
 
-char	*first(int fd)
+char	*go_read(int fd, char *buff)
 {
-
-}
-
-char *next_line(int fd)
-{
-	char	*buff;
+	int		n;
 	char	*next;
-	int num_read;
+	size_t	len_nl;
+	size_t	buff_len;
 
-	buff = NULL;
-	if (!buff)
+	n = read(fd, buff, BUFFER_SIZE);
+	buff_len = ft_strlen(buff);
+	if (buff_len)
 	{
-		buff = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
-		if (!buff)
-			return (NULL);
+		len_nl = ft_strchr(buff, '\n');
+		if (len_nl != 0)
+		{
+			buff[len_nl] = '\0';
+			next = ft_strjoin(&(buff[len_nl + 1]), "");
+			return (buff);
+		}
+		buff[buff_len] = '\0';
 	}
-	num_read = read(fd, buff, BUFFER_SIZE);
-	next = ft_strchr(buff, '\n');
-	if (!next || num_read == -1)
-		return (NULL);
-	// free(buff);
-	// printf("%s\n", next);
-	*next = '\0';
-	return (next + 1);
+	return (buff);
 }
 
-char *gnl(int fd)
+char	*build(char *buff)
 {
-	static char *line;
-	char *find_next;
+	char	*new;
+
+	if (buff != NULL)
+		return (buff);
+	new = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (new != NULL)
+		new[0] = '\0';
+	return (buff);
+}
+
+char	*gnl(int fd)
+{
+	static char	*line;
+	char		*buff;
+
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	line = build(line);
+	buff = build(buff);
+	buff = go_read(fd, buff);
 	if (!line)
 	{
-		line = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
-		if (!line)
-			return (NULL);
-	}
-	find_next = next_line(fd);
-	line = 
-	if (!ft_strlen(line))
-	{
-		line = find_next;
+		line = ft_strjoin(line, buff);
+		return (line);
 	}
 	else
-	{
-		line = ft_strjoin(line, find_next);
-	}
-	// line[0] = '\0';
-	printf("%s\n", line);
-	return (NULL);
+		line = ft_strjoin(line, buff);
+	return (line);
 }
 
-int main(void)
+int	main(void)
 {
-	int fd;
-	char *s;
+	int		fd;
+	char	*s;
 
 	fd = open("test.txt", O_RDONLY);
 	s = gnl(fd);
+	printf("%s\n", s);
 	free(s);
 }

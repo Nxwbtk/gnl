@@ -22,24 +22,26 @@ size_t	ft_strlen(const char *str)
 	return (i);
 }
 
-char	*ft_strchr(const char *s, int c)
+size_t	ft_strchr(const char *s, int c)
 {
 	char			*src;
 	size_t			s_len;
 	unsigned char	cc;
+	size_t			len_new;
 
+	len_new = 0;
 	src = ((char *)s);
 	s_len = ft_strlen(src);
 	cc = (unsigned char)c;
 	if (!c || !s)
-		return (src + s_len);
-	while (*src)
+		return (0);
+	while (src[len_new])
 	{
-		if (*src == cc)
-			return (src);
-		src++;
+		if (src[len_new] == cc)
+			return (len_new);
+		len_new++;
 	}
-	return (NULL);
+	return (0);
 }
 
 char	*lets_join(char *res, char const *s1, char const *s2)

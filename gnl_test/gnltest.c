@@ -7,7 +7,11 @@ char	*go_read(int fd, char *buff)
 	size_t	len_nl;
 	size_t	buff_len;
 
+	// printf("%d\n", fd);
+	(void)buff;
+	buff = malloc(BUFFER_SIZE+1);
 	n = read(fd, buff, BUFFER_SIZE);
+	printf("%s\n", buff);
 	buff_len = ft_strlen(buff);
 	if (buff_len)
 	{
@@ -15,7 +19,7 @@ char	*go_read(int fd, char *buff)
 		if (len_nl != 0)
 		{
 			buff[len_nl] = '\0';
-			next = ft_strjoin(&(buff[len_nl + 1]), "");
+			next = ft_strjoin(buff + len_nl + 1, "");
 			return (buff);
 		}
 		buff[buff_len] = '\0';
@@ -32,7 +36,7 @@ char	*build(char *buff)
 	new = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (new != NULL)
 		new[0] = '\0';
-	return (buff);
+	return (new);
 }
 
 char	*gnl(int fd)
@@ -40,10 +44,12 @@ char	*gnl(int fd)
 	static char	*line;
 	char		*buff;
 
+	// printf("%d\n", fd);
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	line = build(line);
-	buff = build(buff);
+	line = NULL;
+	// buff = build(buff);
+	// printf("%d\n", fd);
 	buff = go_read(fd, buff);
 	if (!line)
 	{
@@ -61,7 +67,9 @@ int	main(void)
 	char	*s;
 
 	fd = open("test.txt", O_RDONLY);
+	// printf("%d\n", fd);
 	s = gnl(fd);
-	printf("%s\n", s);
+	// printf("%s\n", s);
 	free(s);
+	close(fd);
 }

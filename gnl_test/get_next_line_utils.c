@@ -6,7 +6,7 @@
 /*   By: bsirikam <bsirikam@student.42bangkok.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 23:01:02 by bsirikam          #+#    #+#             */
-/*   Updated: 2022/10/27 18:29:43 by bsirikam         ###   ########.fr       */
+/*   Updated: 2022/11/23 00:27:51 by bsirikam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return (0);
 	res = lets_join(res, s1, s2);
 	res[s_toml] = '\0';
+	if (s1)
+		free((char *)s1);
 	return (res);
 }

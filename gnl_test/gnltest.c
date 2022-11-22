@@ -1,64 +1,84 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   gnltest.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bsirikam <bsirikam@student.42bangkok.com>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/23 00:37:53 by bsirikam          #+#    #+#             */
+/*   Updated: 2022/11/23 01:08:50 by bsirikam         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
-char	*build(char *buff)
-{
-	char	*new;
-
-	if (buff != NULL)
-		return (buff);
-	new = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (new != NULL)
-		new[0] = '\0';
-	return (new);
-}
-
-char	*go_read(int fd)
+char	*just_read(int fd, char *line)
 {
 	char	*tmp;
-	char	*buff;
-	size_t	len_nl;
+	int		n;
+	size_t	len_new;
 
-	buff = build(buff);
-	// printf("%s\n", buff);
-	tmp = build(tmp);
-	// printf("%s\n", tmp);
-	while (ft_strchr(tmp, '\n') == 0)
+	n = 1;
+	len_new = 0;
+	line = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (!line)
+		return (NULL);
+	tmp = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (!tmp)
+		return (NULL);
+	while (n > 0 && tmp[ft_strchr(tmp, '\n')] != '\n' \
+		&& tmp[ft_strchr(tmp, '\0')] != '\0')
 	{
-		read(fd, tmp, BUFFER_SIZE);
-		// printf("%s\n", tmp);
-		if (ft_strchr(tmp, '\n') != 0)
-		{
-			// printf("%s\n", buff);
-			// printf("%zu\n", ft_strchr(tmp, '\n'));
-			tmp[ft_strchr(tmp, '\n')] = '\0';
-			// printf("%s\n", tmp);
-			buff = ft_strjoin(buff, tmp);
-			// printf("%s\n", buff);
-			return (buff);
-		}
-		buff = ft_strjoin(buff, tmp);
-		// printf("Run again\n");
+		n = read(fd, tmp, BUFFER_SIZE);
+		tmp[n] = '\0';
+		len_new = ft_strchr(tmp, '\n');
+		line = ft_strjoin(line, tmp);
+		if (len_new > 0)
+			break ;
 	}
-	return (buff);
+	free(tmp);
+	return (line);
+}
+
+char	*find_result(char *line)
+{
+	char	*result;
+	int		i;
+
+	i = 0;
+	result = (char *)malloc(sizeof(char) * (ft_strlen(line) + 1));
+	while (line[i] != '\n' && line[i] != '\0')
+	{
+		result[i] = line[i];
+		i++;
+	}
+	result[i] = '\0';
+	// printf("%s\n", result);
+	return (result);
+}
+
+char	*find_line(char * line)
+{
+	return (NULL);
 }
 
 char	*gnl(int fd)
 {
-	static char	*line = NULL;
-	char		*buff;
+	static char	*line;
+	char		*res;
+	char		*left;
 
 	if (fd < 0 || BUFFER_SIZE < 0 || read(fd, NULL, 0) < 0)
 		return (NULL);
+	// line[0] = '\0';
+	line = just_read(fd, line);
+	if (ft_strlen(line) == 0)
+		return (NULL);
 	// printf("%s\n", line);
-	if (!line)
-		line = build(line);
-	// printf("%s\n", line);
-	buff = go_read(fd);
-	// printf("%s\n", buff);
-	printf("%s\n", line);
-	line = ft_strjoin(line, buff);
-	// printf("%s\n", line);
-	return (line);
+	res = find_result(line);
+	// line = find_line(line);
+	printf("%zu\n", ft_strlen(res));
+	return (res);
 }
 
 int	main(void)
@@ -67,8 +87,8 @@ int	main(void)
 	char	*s;
 
 	fd = open("test.txt", O_RDONLY);
-	// printf("%d\n", fd);
 	s = gnl(fd);
+	// s = gnl(fd);
 	// printf("%s\n", s);
 	// s = gnl(fd);
 	// printf("%s\n", s);

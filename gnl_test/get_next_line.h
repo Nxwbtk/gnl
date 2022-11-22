@@ -6,13 +6,13 @@
 /*   By: bsirikam <bsirikam@student.42bangkok.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 19:48:39 by bsirikam          #+#    #+#             */
-/*   Updated: 2022/10/30 02:08:18 by bsirikam         ###   ########.fr       */
+/*   Updated: 2022/11/23 00:28:58 by bsirikam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
-# define BUFFER_SIZE 42
+# define BUFFER_SIZE 5
 # include <stdlib.h>
 # include <stdio.h>
 # include <fcntl.h>

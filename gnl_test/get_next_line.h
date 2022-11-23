@@ -6,15 +6,15 @@
 /*   By: bsirikam <bsirikam@student.42bangkok.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 19:48:39 by bsirikam          #+#    #+#             */
-/*   Updated: 2022/11/23 17:15:35 by bsirikam         ###   ########.fr       */
+/*   Updated: 2022/11/23 17:21:13 by bsirikam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
-//# ifndef BUFFER_SIZE
-//# define BUFFER_SIZE 42
-//# endif
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
 # include <stdlib.h>
 # include <stdio.h>
 # include <fcntl.h>

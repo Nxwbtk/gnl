@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gnltest.c                                          :+:      :+:    :+:   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bsirikam <bsirikam@student.42bangkok.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/23 00:37:53 by bsirikam          #+#    #+#             */
-/*   Updated: 2022/11/23 01:08:50 by bsirikam         ###   ########.fr       */
+/*   Created: 2022/11/23 17:03:55 by bsirikam          #+#    #+#             */
+/*   Updated: 2022/11/23 17:03:57 by bsirikam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,13 @@ char	*just_read(int fd, char *line)
 
 	n = 1;
 	len_new = 0;
-	line = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!line)
-		return (NULL);
+		line = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	tmp = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!tmp)
 		return (NULL);
-	while (n > 0 && tmp[ft_strchr(tmp, '\n')] != '\n' \
-		&& tmp[ft_strchr(tmp, '\0')] != '\0')
+	while (n > 0 && (tmp[ft_strchr(tmp, '\n')] != '\n' \
+		|| tmp[ft_strchr(tmp, '\0')] != '\0'))
 	{
 		n = read(fd, tmp, BUFFER_SIZE);
 		tmp[n] = '\0';
@@ -46,38 +45,49 @@ char	*find_result(char *line)
 	int		i;
 
 	i = 0;
-	result = (char *)malloc(sizeof(char) * (ft_strlen(line) + 1));
+	result = (char *)malloc(sizeof(char) * (ft_strchr(line, '\n') + 1));
 	while (line[i] != '\n' && line[i] != '\0')
 	{
 		result[i] = line[i];
 		i++;
 	}
 	result[i] = '\0';
-	// printf("%s\n", result);
 	return (result);
 }
 
-char	*find_line(char * line)
+char	*find_line(char *line)
 {
-	return (NULL);
+	char	*resline;
+	size_t	newnum;
+	size_t	resnum;
+	size_t	i;
+
+	resline = NULL;
+	i = 0;
+	newnum = ft_strchr(line, '\n') + 1;
+	resnum = ft_strchr(line, 0) - ft_strchr(line, '\n');
+	resline = (char *)malloc(sizeof(char) * (resnum + 1));
+	while (line[newnum])
+	{
+		resline[i++] = line[newnum++];
+	}
+	if (line)
+		free(line);
+	return (resline);
 }
 
-char	*gnl(int fd)
+char	*get_next_line(int fd)
 {
 	static char	*line;
 	char		*res;
-	char		*left;
 
 	if (fd < 0 || BUFFER_SIZE < 0 || read(fd, NULL, 0) < 0)
 		return (NULL);
-	// line[0] = '\0';
 	line = just_read(fd, line);
 	if (ft_strlen(line) == 0)
 		return (NULL);
-	// printf("%s\n", line);
 	res = find_result(line);
-	// line = find_line(line);
-	printf("%zu\n", ft_strlen(res));
+	line = find_line(line);
 	return (res);
 }
 
@@ -87,11 +97,8 @@ int	main(void)
 	char	*s;
 
 	fd = open("test.txt", O_RDONLY);
-	s = gnl(fd);
-	// s = gnl(fd);
-	// printf("%s\n", s);
-	// s = gnl(fd);
-	// printf("%s\n", s);
+	s = get_next_line(fd);
+	printf("%s", s);
 	free(s);
 	close(fd);
 }

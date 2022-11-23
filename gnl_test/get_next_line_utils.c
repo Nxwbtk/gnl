@@ -6,7 +6,7 @@
 /*   By: bsirikam <bsirikam@student.42bangkok.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 23:01:02 by bsirikam          #+#    #+#             */
-/*   Updated: 2022/11/23 00:27:51 by bsirikam         ###   ########.fr       */
+/*   Updated: 2022/11/23 16:31:26 by bsirikam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,24 +24,14 @@ size_t	ft_strlen(const char *str)
 
 size_t	ft_strchr(const char *s, int c)
 {
-	char			*src;
-	size_t			s_len;
-	unsigned char	cc;
 	size_t			len_new;
 
 	len_new = 0;
-	src = ((char *)s);
-	s_len = ft_strlen(src);
-	cc = (unsigned char)c;
-	if (!c || !s)
+	if (!s)
 		return (0);
-	while (src[len_new])
-	{
-		if (src[len_new] == cc)
-			return (len_new);
+	while (s[len_new] && s[len_new] != c)
 		len_new++;
-	}
-	return (0);
+	return (len_new);
 }
 
 char	*lets_join(char *res, char const *s1, char const *s2)

@@ -15,20 +15,19 @@
 char	*just_read(int fd, char *line)
 {
 	char	*tmp;
-	int		n;
+	ssize_t	n;
 	size_t	len_new;
 
 	n = 1;
 	len_new = 0;
-	if (!line)
-		line = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	tmp = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!tmp)
 		return (NULL);
-	while (n > 0 && (tmp[ft_strchr(tmp, '\n')] != '\n' \
-		|| tmp[ft_strchr(tmp, '\0')] != '\0'))
+	while ((!line || (line[ft_strchr(line, '\n')] != '\n')) && n > 0)
 	{
 		n = read(fd, tmp, BUFFER_SIZE);
+		if (n == -1)
+			break;
 		tmp[n] = '\0';
 		len_new = ft_strchr(tmp, '\n');
 		line = ft_strjoin(line, tmp);
@@ -43,9 +42,18 @@ char	*find_result(char *line)
 {
 	char	*result;
 	int		i;
+	size_t	len_new;
 
+	len_new = ft_strchr(line, '\n');
 	i = 0;
-	result = (char *)malloc(sizeof(char) * (ft_strchr(line, '\n') + 1));
+	if (len_new == 0)
+		result = (char *)malloc(sizeof(char) * (len_new + 1));
+	else if (len_new > 0)
+	{
+		result = (char *)malloc(sizeof(char) * (len_new + 1));
+		result[len_new] = '\n';
+		result[len_new + 1] = '\0';
+	}
 	while (line[i] != '\n' && line[i] != '\0')
 	{
 		result[i] = line[i];
@@ -67,6 +75,8 @@ char	*find_line(char *line)
 	newnum = ft_strchr(line, '\n') + 1;
 	resnum = ft_strchr(line, 0) - ft_strchr(line, '\n');
 	resline = (char *)malloc(sizeof(char) * (resnum + 1));
+	if (!resline)
+		return (NULL);
 	while (line[newnum])
 	{
 		resline[i++] = line[newnum++];
@@ -78,12 +88,17 @@ char	*find_line(char *line)
 
 char	*get_next_line(int fd)
 {
-	static char	*line;
+	static char	*line = NULL;
 	char		*res;
+	char		test;
 
-	if (fd < 0 || BUFFER_SIZE < 0 || read(fd, NULL, 0) < 0)
+	res = NULL;
+	if (fd < 0 || BUFFER_SIZE < 0 || read(fd, &test, 1) <= 0)
+	{
 		return (NULL);
-	line = just_read(fd, line);
+	}
+	if (!line || line[ft_strchr(line, '\n')] != '\n')
+		line = just_read(fd, line);
 	if (ft_strlen(line) == 0)
 		return (NULL);
 	res = find_result(line);
@@ -96,9 +111,10 @@ char	*get_next_line(int fd)
 // 	int		fd;
 // 	char	*s;
 
-// 	fd = open("test.txt", O_RDONLY);
+// 	fd = open("./gnlTester/files/nl", O_RDONLY);
+// 	printf("fd  %d\n", fd);
 // 	s = get_next_line(fd);
-// 	printf("%s", s);
+// 	// printf("%s", s);
 // 	free(s);
 // 	close(fd);
 // }

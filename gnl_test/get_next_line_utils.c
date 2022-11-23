@@ -17,7 +17,7 @@ size_t	ft_strlen(const char *str)
 	size_t	i;
 
 	i = 0;
-	while (str[i] != '\0')
+	while (str[i])
 		i++;
 	return (i);
 }
@@ -52,6 +52,7 @@ char	*lets_join(char *res, char const *s1, char const *s2)
 		j++;
 		i++;
 	}
+	res[i] = '\0';
 	return (res);
 }
 
@@ -62,7 +63,9 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	size_t	s_toml;
 	char	*res;
 
-	if (!s1 || !s2)
+	if (!s1 && !s2)
+		return (0);
+	if (!s1)
 		return (0);
 	s1_len = ft_strlen(s1);
 	s2_len = ft_strlen(s2);
@@ -71,7 +74,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	if (!res)
 		return (0);
 	res = lets_join(res, s1, s2);
-	res[s_toml] = '\0';
 	if (s1)
 		free((char *)s1);
 	return (res);

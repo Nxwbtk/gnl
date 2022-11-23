@@ -6,7 +6,7 @@
 /*   By: bsirikam <bsirikam@student.42bangkok.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 19:48:39 by bsirikam          #+#    #+#             */
-/*   Updated: 2022/11/23 17:21:13 by bsirikam         ###   ########.fr       */
+/*   Updated: 2022/11/24 01:19:24 by bsirikam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,9 @@
 # include <unistd.h>
 
 char	*get_next_line(int fd);
-size_t	ft_strlen(const char *str);
-size_t	ft_strchr(const char *s, int c);
-char	*ft_strjoin(char const *s1, char const *s2);
+size_t	ft_strlen(char *str);
+ssize_t	ft_strchr(const char *s, int c);
+char	*ft_strjoin(char *s1, char *s2);
+char	*ft_rejoin(char *s1, char *s2);
 
 #endif

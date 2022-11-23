@@ -6,25 +6,25 @@
 /*   By: bsirikam <bsirikam@student.42bangkok.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 23:01:02 by bsirikam          #+#    #+#             */
-/*   Updated: 2022/11/23 16:31:26 by bsirikam         ###   ########.fr       */
+/*   Updated: 2022/11/24 01:23:42 by bsirikam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(const char *str)
+size_t	ft_strlen(char *str)
 {
 	size_t	i;
 
 	i = 0;
-	while (str[i])
+	while (str[i] != '\0')
 		i++;
 	return (i);
 }
 
-size_t	ft_strchr(const char *s, int c)
+ssize_t	ft_strchr(const char *s, int c)
 {
-	size_t			len_new;
+	ssize_t			len_new;
 
 	len_new = 0;
 	if (!s)
@@ -34,7 +34,7 @@ size_t	ft_strchr(const char *s, int c)
 	return (len_new);
 }
 
-char	*lets_join(char *res, char const *s1, char const *s2)
+char	*lets_join(char *res, char *s1, char *s2)
 {
 	size_t	i;
 	size_t	j;
@@ -56,7 +56,7 @@ char	*lets_join(char *res, char const *s1, char const *s2)
 	return (res);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	size_t	s1_len;
 	size_t	s2_len;
@@ -74,7 +74,15 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	if (!res)
 		return (0);
 	res = lets_join(res, s1, s2);
+	return (res);
+}
+
+char	*ft_rejoin(char *s1, char *s2)
+{
+	char	*res;
+
+	res = ft_strjoin(s1, s2);
 	if (s1)
-		free((char *)s1);
+		free (s1);
 	return (res);
 }

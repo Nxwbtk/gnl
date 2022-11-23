@@ -6,7 +6,7 @@
 /*   By: bsirikam <bsirikam@student.42bangkok.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 17:03:55 by bsirikam          #+#    #+#             */
-/*   Updated: 2022/11/23 17:03:57 by bsirikam         ###   ########.fr       */
+/*   Updated: 2022/11/23 17:08:14 by bsirikam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,14 +91,14 @@ char	*get_next_line(int fd)
 	return (res);
 }
 
-int	main(void)
-{
-	int		fd;
-	char	*s;
+// int	main(void)
+// {
+// 	int		fd;
+// 	char	*s;
 
-	fd = open("test.txt", O_RDONLY);
-	s = get_next_line(fd);
-	printf("%s", s);
-	free(s);
-	close(fd);
-}
+// 	fd = open("test.txt", O_RDONLY);
+// 	s = get_next_line(fd);
+// 	printf("%s", s);
+// 	free(s);
+// 	close(fd);
+// }

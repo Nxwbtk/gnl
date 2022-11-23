@@ -74,6 +74,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	if (!res)
 		return (0);
 	res = lets_join(res, s1, s2);
+	free (s1);
 	return (res);
 }
 

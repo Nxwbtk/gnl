@@ -30,10 +30,7 @@ char	*just_read(int fd, char *line)
 			break ;
 		tmp[n] = '\0';
 		len_new = ft_strchr(tmp, '\n');
-		if (ft_strlen(line) == 0)
-			line = ft_strjoin("", tmp);
-		else
-			line = ft_rejoin(line, tmp);
+		line = ft_strjoin(line, tmp);
 		if (len_new >= 0)
 			break ;
 	}
@@ -111,7 +108,7 @@ char	*get_next_line(int fd)
 
 // 	fd = open("nl", O_RDONLY);
 // 	s = get_next_line(fd);
-// 	printf("%s", s);
+// 	printf("|%s|", s);
 // 	free(s);
 // 	close(fd);
 // }
